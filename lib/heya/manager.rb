@@ -51,7 +51,6 @@ module Heya
       return @namespaces if @namespaces
 
       dsl = Heya::DSL.new
-      dsl.read
       @namespaces = dsl.namespaces
     end
 

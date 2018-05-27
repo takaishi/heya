@@ -1,7 +1,5 @@
 module Heya
   class DSL
-    attr_reader :namespaces
-
     def initialize
       @namespaces = []
     end
@@ -27,10 +25,14 @@ module Heya
       @namespaces << Kubeclient::Resource.new({metadata: {name: name, labels: params, annotations: annotations}})
     end
 
-    def read
+    def namespaces
+      return @namespaces unless @namespaces.size == 0
+
       open('./Heyafile') do |f|
         eval(f.read, binding)
       end
+
+      @namespaces
     end
   end
 end
