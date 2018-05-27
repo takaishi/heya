@@ -12,7 +12,7 @@ module Heya
           namespace.metadata.labels.to_h.keys.each do |key|
             an = actual_namespaces.find{|an| an.metadata.name == namespace.metadata.name}
             unless an.metadata.labels.to_h.has_key?(key)
-              puts "#{namespace.metadata.name}にラベル #{key}: #{namespace.metadata.labels[key]}を追加"
+              puts "update: #{namespace.metadata.name} add label #{key}: #{namespace.metadata.labels[key]}"
             end
           end
 
@@ -20,7 +20,7 @@ module Heya
           an = actual_namespaces.find{|an| an.metadata.name == namespace.metadata.name}
           an.metadata.labels.to_h.keys.each do |key|
             unless namespace.metadata.labels.to_h.has_key?(key)
-              puts "#{namespace.metadata.name}からラベル #{key}: #{an.metadata.labels[key]}を削除"
+              puts "update: #{namespace.metadata.name} delete label #{key}: #{an.metadata.labels[key]}"
             end
           end
 
@@ -28,7 +28,7 @@ module Heya
           namespace.metadata.labels.to_h.keys.each do |key|
             an = actual_namespaces.find{|an| an.metadata.name == namespace.metadata.name}
             if  an.metadata.labels.to_h.has_key?(key) && namespace.metadata.labels[key] != an.metadata.labels[key]
-              puts "#{namespace.metadata.name}のラベルを更新 #{key}: #{namespace.metadata.labels[key]}"
+              puts "update: #{namespace.metadata.name} update label #{key}: #{namespace.metadata.labels[key]}"
             end
           end
 
@@ -41,7 +41,7 @@ module Heya
 
       actual_namespaces.each do |namespace|
         unless namespaces.any?{|ns| ns.metadata.name == namespace.metadata.name}
-          puts "delete #{namespace.metadata.name}"
+          puts "delete: #{namespace.metadata.name}"
           client.delete_namespace(namespace.metadata.name) unless dryrun
         end
       end
