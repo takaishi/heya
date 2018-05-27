@@ -3,6 +3,7 @@ require 'thor'
 require 'yaml'
 
 require "heya/cli"
+require "heya/dsl"
 require "heya/manager"
 require "heya/kubeconfig"
 require "heya/version"

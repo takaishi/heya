@@ -6,7 +6,7 @@ module Heya
     option :dry_run, type: :boolean, default: false
     def apply
       manager = Heya::Manager.new
-      manager.read
+      # manager.read
       manager.apply(options[:'dry_run'])
     end
   end
