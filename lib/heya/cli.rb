@@ -4,6 +4,9 @@ module Heya
 
     desc 'apply', ''
     def apply
+      manager = Heya::Manager.new
+      manager.read
+      manager.apply
     end
   end
 end
