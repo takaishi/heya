@@ -26,7 +26,7 @@ module Heya
     end
 
     def read
-      open('./namespaces.rb') do |f|
+      open('./Heyafile') do |f|
         eval(f.read, binding)
       end
     end
