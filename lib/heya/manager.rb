@@ -74,13 +74,15 @@ module Heya
     end
 
     def k8s_client
+      config = Heya::Kubeconfig.new("#{ENV['HOME']}/.kube/config")
+
       ssl_options = {
-          client_cert: OpenSSL::X509::Certificate.new(File.read('/Users/r_takaishi/.minikube/client.crt')),
-          client_key: OpenSSL::PKey::RSA.new(File.read('/Users/r_takaishi/.minikube/client.key')),
-          ca_file: '/Users/r_takaishi/.minikube/ca.crt',
+          client_cert: OpenSSL::X509::Certificate.new(File.read(config.user_client_certificate)),
+          client_key: OpenSSL::PKey::RSA.new(File.read(config.user_client_key)),
+          ca_file: config.cluster_ca,
           verify_ssl:  OpenSSL::SSL::VERIFY_PEER
       }
-      Kubeclient::Client.new('https://192.168.99.100:8443/api/', "v1", ssl_options: ssl_options)
+      Kubeclient::Client.new(config.cluster_server, "v1", ssl_options: ssl_options)
     end
   end
 end
